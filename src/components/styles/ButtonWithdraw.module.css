@@ -1,0 +1,224 @@
+body * {
+    box-sizing: border-box;
+  }
+  .button-component {
+    position : relative;
+    width: 156px;
+    height: 40px;
+    gap: 8px;
+    overflow: hidden;
+    display : inline-block
+  }
+  .button-deposit {
+    position: absolute;
+    width: calc(100% - 40px);
+    height: 100%;
+    left : 0;
+    padding : 0px 5px 0px 40px;
+    background-color : #232423;
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 40px;  
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color : white;
+    text-align: center;
+    cursor : pointer;
+    top : 0;
+    opacity : 1;
+    transition : top 0.6s, opacity 0.6s;
+  }
+  .button-deposit .deposit-svg {
+    position: absolute;
+    width : 40px;
+    height : 100%;
+    left : 0;
+    padding : 7px 8px 8px 8px;
+  }
+  .button-deposit .deposit-svg svg {
+    width : 100%;
+    height : 100%;
+    opacity : 1;
+    fill : white;
+  }
+  .button-deposit span {
+    position : absolute;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    left : 10px;
+    top : 10px;
+  }
+  .button-deposit span svg {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 50%;
+    top: 50%;
+    margin: -8px 0 0 -8px;
+    z-index: 1;
+    fill : white;
+  }
+  .button-deposit span svg:nth-child(1) {
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  }
+  .button-deposit:hover span svg:nth-child(1) {
+    transform: translateY(3px);
+  }
+  .button-deposit ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    height: 100%;
+    width: 70px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+  }
+  .button-deposit ul li {
+    --rotateX: 0deg;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform-origin: 50% 50%;
+    transform: rotateX(var(--rotateX)) translateZ(10px);
+  }
+  
+  @-webkit-keyframes turn-activate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes turn-activate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes path-activate {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes path-activate {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  /****** buy now button  *************/
+  .button-withdraw {
+    position: absolute;
+    width: 40px;
+    height: 100%;
+    right : 0;
+    background-image : url(../assets/deposit.svg);  
+    background-size: 25px;
+    background-position: 7px center;
+    background-repeat: no-repeat;
+    padding : 10px 0px 10px 37px; 
+    background-color : white!important;
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 100%;
+    border : 2px solid black; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    text-align: left;
+    cursor : pointer;
+    top : 0;
+    opacity : 1;
+    transition : top 0.6s, opacity 0.6s, width 0.8s;
+  }
+  .button-withdraw:hover {
+    width : calc(100% - 40px);
+  }
+  /*******  added deposit     *************/
+  .added-deposit {
+    position : absolute;
+    left : 0;
+    top : 100%;
+    height : 100%;
+    width : 100%;
+    background-color : #C3BBEC;
+    text-align: center;
+    cursor : pointer;
+    opacity : 0;
+    transition : top 0.6s, opacity 0.6s;
+  }
+  .added-deposit .deposit-svg {
+    height : 100%;
+    width : 40px;
+    position : relative;
+    display : inline-block;
+    padding : 7px 8px 8px 8px;
+  }
+  .added-deposit .deposit-svg > svg, .added-deposit .deposit-svg span {
+    left : 0;
+    top : 0;
+    width : 100%;
+    height: 100%;
+    fill : black;
+  }
+  .added-deposit .deposit-svg span svg {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 50%;
+    top: 50%;
+    margin: -6px 0 0 -6px;
+    z-index: 1;
+  }
+  .added-deposit ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    height: 20px;
+    margin-top: 10px;
+    width: 70px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+  }
+  .added-deposit ul li {
+    --rotateX: 0deg;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform-origin: 50% 50%;
+    transform: rotateX(var(--rotateX)) translateZ(10px);
+  }
+  .added-deposit ul li:nth-child(2) {
+    --rotateX: -90deg;
+  }
+  .added-deposit:hover ul {
+    transform : rotateX(90deg);
+  }
+  .added .added-deposit {
+    top : 0;
+    opacity : 1;
+  }
+  .added .button-deposit,  .added .button-withdraw {
+    top : -100%;
+    opacity : 0;
+  }
+  

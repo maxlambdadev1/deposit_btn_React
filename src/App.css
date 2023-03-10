@@ -1,0 +1,29 @@
+body {
+  @import "fonts";
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Lab Grotesque Mono";
+  font-size: 1rem;
+  background: #404040;
+
+
+}
+
+.table-header {
+  width: 12rem;
+  height: 2rem;
+  background-color: #000;
+  border-radius: 1rem 1rem 0 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.table-cell {
+  width: 12rem;
+  height: 6rem;
+  background-color: rgba(0,255,255,0.3);
+  border-radius: 0 0 1rem 1rem;
+  text-align: center;
+}
