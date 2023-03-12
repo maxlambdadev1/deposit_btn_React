@@ -4,41 +4,75 @@ import { ReactComponent as DepositSVG } from "./assets/deposit.svg";
 import classNames from "classnames";
 
 const ButtonBuyNow = ({...props}) => {
-    const [isLoading, setIsLoading] = useState(false);
     const [isDeposit, setIsDeposit] = useState(false);
+    const [flagNum, setFlagNum] = useState(0);
+    const [isMouseoverAdded, setIsMouseoverAdded] = useState(false);
+
+    const [key, setKey] = useState("");
+    const [keyArr, setKeyArr] = useState(["", "", ""]);
+    const [keyStatus, setKeyStatus] = useState("");
+    const [borderRadius, setBorderRadius] = useState("0");
+    const [boxShadow, setBoxShadow] = useState("0");
 
     useEffect(()=>{
-    }, []);
+        window.addEventListener("keydown", (evt) => {
+        setKey(evt.key);
+        });
+    })
+    useEffect(()=>{
+      let arr = keyArr;
+      arr.unshift(key); 
+      arr = arr.slice(0, 3);
+      setKeyArr([...arr]);
+    }, [key]);
+    useEffect(()=>{
+        if(keyArr[0].toLowerCase() === "c") setKeyStatus("keyC");
+       if(keyArr[1] === "5" && keyArr[0] === "4") setKeyStatus("key54");
+       if(keyArr[2].toLowerCase() === "s" && keyArr[1].toLowerCase() === "b" && keyArr[0].toLowerCase() === "f") setKeyStatus("keySBF");
+    }, [keyArr]);
+    useEffect(()=>{
+        if (keyStatus === "keyC") {
+            setBorderRadius("0")
+            setBoxShadow("4px 8px 0px #000, 8px 4px 0px #000, 4px 0px 0px #000, 0px 4px 0px #000, -4px 0px 0px #000, 0px -4px 0px #000, inset 0px 4px 0px #fff, inset 4px 0px 0px #fff, inset -4px 0px 0px #a3a3a3, inset 0px -4px 0px #a3a3a3");            
+        } else if (keyStatus === 'key54') {
+            setBorderRadius("10px")
+            setBoxShadow("#ff0000");
+        }else if (keyStatus === 'keySBF') {
+            setBorderRadius("50px")
+            setBoxShadow("10px 10px 8px rgb(0 0 0 / 40%), inset 2px 2px 0px #00cd41, inset -2px -2px 0px #002c03");
+        }
+    }, [keyStatus]);
+
 
     const onClickDeposit = () => {
-        if(!isLoading) {
-            setIsLoading(true);
-            setIsDeposit(true);
-            setTimeout(()=>{
-                setIsLoading(false);
-            }, 1000);
-        }
+        setIsDeposit(true);
+        setFlagNum(0); 
+        setTimeout(()=>setFlagNum(1), 600);
     }
     const onRemoveDeposit = () => {
-            setIsDeposit(false);
+        setIsDeposit(false);
+    }    
+    const onMouseoverAdded = () => { 
+        if (isDeposit && flagNum === 1) setIsMouseoverAdded(true);
     }
-    
+    const onMouseoutAdded = () => {
+        setIsMouseoverAdded(false);
+    }    
     const onClickBuynow = () => {
         props.onClick();
     }
 
     return (
-        <div className={classNames(style['button-component'], isDeposit?style['added']:'')}>
-            <div className={classNames(style['button-deposit'], isLoading?style['loading']:'')}
+        <div className={classNames(style['button-component'], isDeposit?style['added']:'')}
+            style={{ '--border-radius' : borderRadius, '--box-shadow' : boxShadow }}
+        >
+            <div className={classNames(style['button-deposit'], isMouseoverAdded?style['mouseover']:'')}
                 onClick={onClickDeposit}
             >
                 <div className={style['deposit-svg']}>
                     <DepositSVG />
                 </div>                   
                 <span>
-                    <svg>
-                        <use xlinkHref="#circle-activate" />
-                    </svg>
                     <svg>
                         <use xlinkHref="#check-activate" />
                     </svg>
@@ -52,8 +86,10 @@ const ButtonBuyNow = ({...props}) => {
             >
                 BUY NOW
             </div>
-            <div className={classNames(style['added-deposit'])}
+            <div className={classNames(style['added-deposit'], isMouseoverAdded?style['mouseover']:'')}
                 onClick={onRemoveDeposit}
+                onMouseOver={onMouseoverAdded}
+                onMouseOut={onMouseoutAdded}
             >
                 <div className={style['deposit-svg']}>
                     <DepositSVG />                 

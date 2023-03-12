@@ -7,7 +7,11 @@ body * {
   height: 40px;
   gap: 8px;
   overflow: hidden;
-  display : inline-block
+  display : inline-block;
+  --border-radius : '0';
+  --box-shadow : '0';
+  border-radius : var(--border-radius);
+  box-shadow : var(--box-shadow);
 }
 .button-deposit {
   position: absolute;
@@ -62,38 +66,8 @@ body * {
   fill : white;
 }
 .button-deposit span svg:nth-child(1) {
-  width: 20px;
-  height: 20px;
-  top: 0;
-  left: 0;
-  fill: none;
-  margin: 0;
-  stroke: #fff;
-  stroke-width: 1px;
-  stroke-dashoffset: 94.248;
-  stroke-dasharray: 47.124;
-  opacity : 0;
-}
-.button-deposit span svg:nth-child(2) {
   transform: translateY(20px);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-}
-.button-deposit.loading .deposit-svg svg {
-  opacity : 0;
-}
-.button-deposit.loading span svg:nth-child(1) {
-  opacity : 1;
-}
-.button-deposit:hover span svg:nth-child(2) {
-  transform: translateY(3px);
-}
-.button-deposit.loading span svg:nth-child(1) {
-  -webkit-animation: turn-activate 1.6s linear infinite forwards, path-activate 1.6s linear infinite forwards;
-          animation: turn-activate 1.6s linear infinite forwards, path-activate 1.6s linear infinite forwards;
-}
-.button-deposit.loading span svg:nth-child(2) {
-  opacity: 0;
-  transform: translateY(0) scale(0.6);
 }
 .button-deposit ul {
   padding: 0;
@@ -119,7 +93,9 @@ body * {
   transform-origin: 50% 50%;
   transform: rotateX(var(--rotateX)) translateZ(10px);
 }
-
+.button-deposit:hover span svg:nth-child(1) {
+  transform: translateY(3px);
+}
 @-webkit-keyframes turn-activate {
   100% {
     transform: rotate(360deg);
@@ -185,6 +161,7 @@ body * {
   cursor : pointer;
   opacity : 0;
   transition : top 0.6s, opacity 0.6s;
+  border-radius : var(--border-radius);
 }
 .added-deposit .deposit-svg {
   height : 100%;
@@ -237,7 +214,7 @@ body * {
 .added-deposit ul li:nth-child(2) {
   --rotateX: -90deg;
 }
-.added-deposit:hover ul {
+.added-deposit.mouseover ul {
   transform : rotateX(90deg);
 }
 .added .added-deposit {

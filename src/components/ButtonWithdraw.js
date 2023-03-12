@@ -6,22 +6,84 @@ import classNames from "classnames";
 const ButtonWithdraw = () => {
     const [isDeposit, setIsDeposit] = useState(false);
     const [isWithdraw, setIsWithdraw] = useState(false);
+    const [flagAdded, setFlagAdded] = useState(0);
+    const [flagClickedRemove, setFlagClickedRemove] = useState(false);
+    const [isMouseoverAdded, setIsMouseoverAdded] = useState(false);
+    const [isMouseoverWithdraw, setIsMouseoverWithdraw] = useState(false);
+
+    const [key, setKey] = useState("");
+    const [keyArr, setKeyArr] = useState(["", "", ""]);
+    const [keyStatus, setKeyStatus] = useState("");
+    const [borderRadius, setBorderRadius] = useState("0");
+    const [boxShadow, setBoxShadow] = useState("0");
+
+    useEffect(()=>{
+        window.addEventListener("keydown", (evt) => {
+        setKey(evt.key);
+        });
+    })
+    useEffect(()=>{
+      let arr = keyArr;
+      arr.unshift(key); 
+      arr = arr.slice(0, 3);
+      setKeyArr([...arr]);
+    }, [key]);
+    useEffect(()=>{
+        if(keyArr[0].toLowerCase() === "c") setKeyStatus("keyC");
+       if(keyArr[1] === "5" && keyArr[0] === "4") setKeyStatus("key54");
+       if(keyArr[2].toLowerCase() === "s" && keyArr[1].toLowerCase() === "b" && keyArr[0].toLowerCase() === "f") setKeyStatus("keySBF");
+    }, [keyArr]);
+    useEffect(()=>{
+        if (keyStatus === "keyC") {
+            setBorderRadius("10px")
+            setBoxShadow("#ff0000");
+        } else if (keyStatus === 'key54') {
+            setBorderRadius("50px")
+            setBoxShadow("10px 10px 8px rgb(0 0 0 / 40%), inset 2px 2px 0px #00cd41, inset -2px -2px 0px #002c03");
+        }else if (keyStatus === 'keySBF') {
+            setBorderRadius("0")
+            setBoxShadow("4px 8px 0px #000, 8px 4px 0px #000, 4px 0px 0px #000, 0px 4px 0px #000, -4px 0px 0px #000, 0px -4px 0px #000, inset 0px 4px 0px #fff, inset 4px 0px 0px #fff, inset -4px 0px 0px #a3a3a3, inset 0px -4px 0px #a3a3a3");
+        }
+    }, [keyStatus]);
 
     const onClickDeposit = () => {
-            setIsDeposit(true);
+        setIsDeposit(true);
+        setFlagAdded(0); 
+        setTimeout(()=>setFlagAdded(1), 600);
     }
     const onClickWidthdraw = () => {
-            setIsWithdraw(true);
+        setIsWithdraw(true);
+        setFlagAdded(0); 
+        setTimeout(()=>setFlagAdded(1), 600);
     }
     const onRemove = () => {
-            setIsDeposit(false);
-            setIsWithdraw(false);
+        setIsDeposit(false);
+        setIsWithdraw(false);
+        setFlagClickedRemove(true);
+        setTimeout(()=>setFlagClickedRemove(false), 800);
+    }
+    const onMouseoverAdded = () => { 
+        if ((isDeposit || isWithdraw) && flagAdded === 1) setIsMouseoverAdded(true);
+    }
+    const onMouseoutAdded = () => {
+        setIsMouseoverAdded(false);
+    }   
+    const onMouseoverWithdraw = () => { 
+        if (!flagClickedRemove) setIsMouseoverWithdraw(true);
+        console.log("withraw,", flagClickedRemove)
+    }
+    const onMouseoverDeposit = () => { 
+        if (!flagClickedRemove) setIsMouseoverWithdraw(false);
+        console.log("deposit,", flagClickedRemove)
     }
     
     return (
-        <div className={classNames(style['button-component'], (isDeposit||isWithdraw)?style['added']:'')}>
-            <div className={classNames(style['button-deposit'])}
+        <div className={classNames(style['button-component'], (isDeposit||isWithdraw)?style['added']:'')}
+            style={{ '--border-radius' : borderRadius, '--box-shadow' : boxShadow }}
+        >
+            <div className={classNames(style['button-deposit'], isMouseoverWithdraw?style['mouseover']:'')}
                 onClick={onClickDeposit}
+                onMouseOver={onMouseoverDeposit}
             >
                 <div className={style['deposit-svg']}>
                     <DepositSVG />
@@ -35,13 +97,26 @@ const ButtonWithdraw = () => {
                     <li>DEPOSIT</li>
                 </ul>  
             </div>
-            <div className={style['button-withdraw']}
+            <div className={classNames(style['button-withdraw'], isMouseoverWithdraw?style['mouseover']:'')}
                 onClick={onClickWidthdraw}
+                onMouseOver={onMouseoverWithdraw}
             >
-                WITHDRAW
+                <div className={style['deposit-svg']}>
+                    <DepositSVG />
+                </div>                   
+                <span>
+                    <svg>
+                        <use xlinkHref="#check-activate" />
+                    </svg>
+                </span>
+                <ul className={classNames(style[`button-text`])} >
+                    <li>WITHDRAW</li>
+                </ul>  
             </div>
-            <div className={classNames(style['added-deposit'])}
+            <div className={classNames(style['added-deposit'], isMouseoverAdded?style['mouseover']:'')}
                 onClick={onRemove}
+                onMouseOver={onMouseoverAdded}
+                onMouseOut={onMouseoutAdded}
             >
                 <div className={style['deposit-svg']}>
                     <DepositSVG />                 
