@@ -145,6 +145,7 @@ body * {
   top : 0;
   opacity : 1;
   transition : top 0.6s, opacity 0.6s, width 0.8s;
+  border-radius : 0 var(--border-radius) var(--border-radius) 0 ;
 }
 .button-buynow:hover {
   width : calc(100% - 40px);
@@ -161,7 +162,6 @@ body * {
   cursor : pointer;
   opacity : 0;
   transition : top 0.6s, opacity 0.6s;
-  border-radius : var(--border-radius);
 }
 .added-deposit .deposit-svg {
   height : 100%;
